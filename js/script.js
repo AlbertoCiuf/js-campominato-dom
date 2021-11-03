@@ -20,11 +20,8 @@ playButton.addEventListener('click', function() {
   if (chosenDifficulty===1) {
     squareNumber=100;
     //genero le bombe verificando che non ci siano doppioni
-    for (let i=0; i<BOMBS_NUMBER; i++) {
-      let bomb = getRandomInt(1,squareNumber);
-      if (!bombs.includes(bomb)) bombs.push(bomb);
-      else i--;
-   }
+    generateBombs(squareNumber);
+
    //genero i quadrati della griglia
     for (let i=0; i<squareNumber; i++) {
       const square = generateSquare(grid);
@@ -35,11 +32,7 @@ playButton.addEventListener('click', function() {
   } else if (chosenDifficulty===2) {
     squareNumber = 81;
     //genero le bombe verificando che non ci siano doppioni
-    for (let i=0; i<BOMBS_NUMBER; i++) {
-      let bomb = getRandomInt(1,squareNumber);
-      if (!bombs.includes(bomb)) bombs.push(bomb);
-      else i--;
-   }
+    generateBombs(squareNumber);
    //genero i quadrati della griglia
     for (let i=0; i<squareNumber; i++) {
       const square = generateSquare(grid);
@@ -49,11 +42,7 @@ playButton.addEventListener('click', function() {
   } else {
     squareNumber=49;
     //genero le bombe verificando che non ci siano doppioni
-    for (let i=0; i<BOMBS_NUMBER; i++) {
-      let bomb = getRandomInt(1,squareNumber);
-      if (!bombs.includes(bomb)) bombs.push(bomb);
-      else i--;
-   }
+    generateBombs(squareNumber);
    //genero i quadrati della griglia
     for (let i=0; i<squareNumber; i++) {
       const square = generateSquare(grid);
@@ -90,8 +79,8 @@ function generateSquare(target) {
     //se il giocatore riesce a finire il gioco, stampo l'output del messaggio di vittoria
     if 
     (
-      (chosenDifficulty === 1 && scoreCounter === (100 - BOMBS_NUMBER-1)) || (chosenDifficulty === 2 && scoreCounter === (81 - BOMBS_NUMBER-1)) ||
-      (chosenDifficulty === 3 && scoreCounter === (49- BOMBS_NUMBER-1))
+      (chosenDifficulty === 1 && scoreCounter === (100 - BOMBS_NUMBER -1)) || (chosenDifficulty === 2 && scoreCounter === (81 - BOMBS_NUMBER -1)) ||
+      (chosenDifficulty === 3 && scoreCounter === (49 - BOMBS_NUMBER -1))
     ) {
       sq.classList.add('safe');
       endMessage.innerHTML = `Complimenti, hai vinto!`;
@@ -119,6 +108,23 @@ function generateSquare(target) {
   return sq;
 }
 
+
+//funzione che genera e restituisce numero intero random compreso tra minimo e massimo passati come parametri
+function getRandomInt(min,max) {
+  return Math.floor(Math.random()*(max - min + 1) + min);
+}
+
+
+//funzione che genera le bombe in base ai quadrati contenuti nella griglia (e di conseguenza in base alla difficoltà scelta)
+function generateBombs(sqNumb) {
+  for (let i=0; i<BOMBS_NUMBER; i++) {
+    let bomb = getRandomInt(1,sqNumb);
+    if (!bombs.includes(bomb)) bombs.push(bomb);
+    else i--;
+ }
+}
+
+
 function endGame() {
 //  console.log('siamo dentro end game');
   let squareList = document.querySelectorAll('.square');
@@ -128,9 +134,3 @@ function endGame() {
     if (bombs.includes(parseInt(singleSquare))) squareList[i].classList.add('bomb');
   }
 }
-
-//funzione che genera e restituisce numero intero random compreso tra minimo e massimo passati come parametri
-function getRandomInt(min,max) {
-  return Math.floor(Math.random()*(max - min + 1) + min);
-}
-
