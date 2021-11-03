@@ -13,16 +13,24 @@ const endMessage = document.getElementById('end-message');
 
 // funzione che al click del pulsante "Play!" genera le griglie in base alla difficoltà scelta
 playButton.addEventListener('click', function() {
+  playGame();
+});
+
+
+
+
+//funzione che fa iniziare il gioco
+function playGame(){
   chosenDifficulty = parseInt(difficulty.value);
   grid.innerHTML="";
   bombs=[];
-  
+
   if (chosenDifficulty===1) {
     squareNumber=100;
     //genero le bombe verificando che non ci siano doppioni
     generateBombs(squareNumber);
 
-   //genero i quadrati della griglia
+    //genero i quadrati della griglia
     for (let i=0; i<squareNumber; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
@@ -33,17 +41,17 @@ playButton.addEventListener('click', function() {
     squareNumber = 81;
     //genero le bombe verificando che non ci siano doppioni
     generateBombs(squareNumber);
-   //genero i quadrati della griglia
+    //genero i quadrati della griglia
     for (let i=0; i<squareNumber; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
     }
-   
+  
   } else {
     squareNumber=49;
     //genero le bombe verificando che non ci siano doppioni
     generateBombs(squareNumber);
-   //genero i quadrati della griglia
+    //genero i quadrati della griglia
     for (let i=0; i<squareNumber; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
@@ -55,9 +63,8 @@ playButton.addEventListener('click', function() {
       // bombs.sort(function(a,b){
       //   return a-b;
       // });
-       console.log(bombs);
-});
-
+      console.log(bombs);
+}
 
 
 //funzione che genera i quadrati delle griglie in base alla difficoltà scelta
@@ -77,10 +84,17 @@ function generateSquare(target) {
 //Verifico che la cella cliccata sia una bomba oppure no. Se non lo è posso continuare a giocare e il mio punteggio aumenta di uno (scoreCounter++), mentre alla prima bomba che viene cliccata il gioco si interrompe e viene visualizzato un messaggio che comunica il punteggio totalizzato.
   sq.addEventListener('click', function(event){ 
     //se il giocatore riesce a finire il gioco, stampo l'output del messaggio di vittoria
+
+    if (chosenDifficulty === 1) squareNumber = 100;
+    else if (chosenDifficulty === 2) squareNumber = 81;
+    else squareNumber = 49;
+
+   // console.log(squareNumber);
+
     if 
     (
-      (chosenDifficulty === 1 && scoreCounter === (100 - BOMBS_NUMBER -1)) || (chosenDifficulty === 2 && scoreCounter === (81 - BOMBS_NUMBER -1)) ||
-      (chosenDifficulty === 3 && scoreCounter === (49 - BOMBS_NUMBER -1))
+      (chosenDifficulty === 1 && scoreCounter === (squareNumber - BOMBS_NUMBER -1)) || (chosenDifficulty === 2 && scoreCounter === (squareNumber - BOMBS_NUMBER -1)) ||
+      (chosenDifficulty === 3 && scoreCounter === (squareNumber - BOMBS_NUMBER -1))
     ) {
       sq.classList.add('safe');
       endMessage.innerHTML = `Complimenti, hai vinto!`;
