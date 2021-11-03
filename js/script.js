@@ -3,6 +3,7 @@ const grid = document.getElementById('grid');
 const playButton = document.getElementById('play-button');
 const difficulty = document.getElementById('difficulty');
 let chosenDifficulty;
+let result=false;
 
 const bombs = [];
 const BOMBS_NUMBER = 16;
@@ -69,18 +70,26 @@ function generateSquare(target) {
     sq.classList.add('hard');
 
   }
-  
   sq.addEventListener('click', function(event){
     // let sqNumb = event.target.innerText;
     // console.log(sqNumb);
     //console.log(this.innerText);
-
-    if (!(bombs.includes(parseInt(this.innerText)))) {
+    
+    let scoreCounter=0;
+    if (!bombs.includes(parseInt(this.innerText)) && result===false) {
       sq.classList.add('safe');
-      console.log(sq);
+      console.log(result);
+      scoreCounter++;
+      // console.log(sq);
     }
-    else if (bombs.includes(parseInt(this.innerText))) {
+    else if (bombs.includes(parseInt(this.innerText)) && result===false) {
       sq.classList.add('bomb');
+      result=true;
+      console.log(result);
+      return result;
+    } else { 
+      console.log(result);
+      return result;
     }
   })
 
