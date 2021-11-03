@@ -3,11 +3,11 @@ const grid = document.getElementById('grid');
 const playButton = document.getElementById('play-button');
 const difficulty = document.getElementById('difficulty');
 let chosenDifficulty;
+let squareNumber=0;
 let result=false;
 let scoreCounter=0;
-const bombs = [];
+let bombs = [];
 const BOMBS_NUMBER = 16;
-
 const endMessage = document.getElementById('end-message');
 
 
@@ -15,46 +15,47 @@ const endMessage = document.getElementById('end-message');
 playButton.addEventListener('click', function() {
   chosenDifficulty = parseInt(difficulty.value);
   grid.innerHTML="";
+  bombs=[];
   
   if (chosenDifficulty===1) {
-
+    squareNumber=100;
     //genero le bombe verificando che non ci siano doppioni
     for (let i=0; i<BOMBS_NUMBER; i++) {
-      let bomb = getRandomInt(1,100);
+      let bomb = getRandomInt(1,squareNumber);
       if (!bombs.includes(bomb)) bombs.push(bomb);
       else i--;
    }
    //genero i quadrati della griglia
-    for (let i=0; i<100; i++) {
+    for (let i=0; i<squareNumber; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
     }
     
 
   } else if (chosenDifficulty===2) {
-
+    squareNumber = 81;
     //genero le bombe verificando che non ci siano doppioni
     for (let i=0; i<BOMBS_NUMBER; i++) {
-      let bomb = getRandomInt(1,81);
+      let bomb = getRandomInt(1,squareNumber);
       if (!bombs.includes(bomb)) bombs.push(bomb);
       else i--;
    }
    //genero i quadrati della griglia
-    for (let i=0; i<81; i++) {
+    for (let i=0; i<squareNumber; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
     }
    
   } else {
-
+    squareNumber=49;
     //genero le bombe verificando che non ci siano doppioni
     for (let i=0; i<BOMBS_NUMBER; i++) {
-      let bomb = getRandomInt(1,49);
+      let bomb = getRandomInt(1,squareNumber);
       if (!bombs.includes(bomb)) bombs.push(bomb);
       else i--;
    }
    //genero i quadrati della griglia
-    for (let i=0; i<49; i++) {
+    for (let i=0; i<squareNumber; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
     }
