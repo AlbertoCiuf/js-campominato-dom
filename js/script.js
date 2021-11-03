@@ -69,18 +69,22 @@ function generateSquare(target) {
     sq.classList.add('hard');
 
   }
-
+  
   sq.addEventListener('click', function(event){
-    let sqNumb = event.target.innerText;
-    console.log(sqNumb);
-    
-    if (!bombs.includes(sqNumb)) {
+    // let sqNumb = event.target.innerText;
+    // console.log(sqNumb);
+    //console.log(this.innerText);
+
+    if (!(bombs.includes(parseInt(this.innerText)))) {
       sq.classList.add('safe');
       console.log(sq);
     }
-    else sq.classList.add('bomb');
+    else if (bombs.includes(parseInt(this.innerText))) {
+      sq.classList.add('bomb');
+    }
   })
 
+  
   target.append(sq);
   return sq;
 }
