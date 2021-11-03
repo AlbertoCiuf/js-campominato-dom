@@ -60,10 +60,12 @@ playButton.addEventListener('click', function() {
     }
   }
 
-  bombs.sort(function(a,b){
-    return a-b;
-  });
-  console.log(bombs);
+
+  //array sortato e log per provare a vincere e testare il messaggio di vittoria
+      // bombs.sort(function(a,b){
+      //   return a-b;
+      // });
+       console.log(bombs);
 });
 
 
@@ -84,20 +86,17 @@ function generateSquare(target) {
 
 //Verifico che la cella cliccata sia una bomba oppure no. Se non lo è posso continuare a giocare e il mio punteggio aumenta di uno (scoreCounter++), mentre alla prima bomba che viene cliccata il gioco si interrompe e viene visualizzato un messaggio che comunica il punteggio totalizzato.
   sq.addEventListener('click', function(event){ 
-
+    //se il giocatore riesce a finire il gioco, stampo l'output del messaggio di vittoria
     if 
     (
       (chosenDifficulty === 1 && scoreCounter === (100 - BOMBS_NUMBER-1)) || (chosenDifficulty === 2 && scoreCounter === (81 - BOMBS_NUMBER-1)) ||
       (chosenDifficulty === 3 && scoreCounter === (49- BOMBS_NUMBER-1))
-    )
-    
-    {
+    ) {
       sq.classList.add('safe');
       endMessage.innerHTML = `Complimenti, hai vinto!`;
       endMessage.style.display='block';
       grid.append(endMessage);
       result=true;
-      return result;
     }
 
     if (!bombs.includes(parseInt(this.innerText)) && result===false) {
@@ -111,13 +110,22 @@ function generateSquare(target) {
       endMessage.style.display='block';
       grid.append(endMessage);
       console.log(grid);
-      return result;
-    } else { 
-      return result;
+      endGame();
     }
   });
+
   target.append(sq);
   return sq;
+}
+
+function endGame() {
+//  console.log('siamo dentro end game');
+  let squareList = document.querySelectorAll('.square');
+  for (let i=0; i<squareList.length; i++){
+    //console.log(i);
+    let singleSquare = parseInt(squareList[i].innerText);
+    if (bombs.includes(parseInt(singleSquare))) squareList[i].classList.add('bomb');
+  }
 }
 
 //funzione che genera e restituisce numero intero random compreso tra minimo e massimo passati come parametri
