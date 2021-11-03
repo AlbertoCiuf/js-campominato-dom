@@ -92,6 +92,7 @@ function generateSquare(target) {
     )
     
     {
+      sq.classList.add('safe');
       endMessage.innerHTML = `Complimenti, hai vinto!`;
       endMessage.style.display='block';
       grid.append(endMessage);
