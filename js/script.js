@@ -15,14 +15,16 @@ const endMessage = document.getElementById('end-message');
 playButton.addEventListener('click', function() {
   chosenDifficulty = parseInt(difficulty.value);
   grid.innerHTML="";
-  //console.log('click');
   
   if (chosenDifficulty===1) {
+
+    //genero le bombe verificando che non ci siano doppioni
     for (let i=0; i<BOMBS_NUMBER; i++) {
       let bomb = getRandomInt(1,100);
       if (!bombs.includes(bomb)) bombs.push(bomb);
       else i--;
    }
+   //genero i quadrati della griglia
     for (let i=0; i<100; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
@@ -30,36 +32,43 @@ playButton.addEventListener('click', function() {
     
 
   } else if (chosenDifficulty===2) {
+
+    //genero le bombe verificando che non ci siano doppioni
     for (let i=0; i<BOMBS_NUMBER; i++) {
       let bomb = getRandomInt(1,81);
       if (!bombs.includes(bomb)) bombs.push(bomb);
       else i--;
    }
+   //genero i quadrati della griglia
     for (let i=0; i<81; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
     }
    
   } else {
+
+    //genero le bombe verificando che non ci siano doppioni
     for (let i=0; i<BOMBS_NUMBER; i++) {
       let bomb = getRandomInt(1,49);
       if (!bombs.includes(bomb)) bombs.push(bomb);
       else i--;
    }
+   //genero i quadrati della griglia
     for (let i=0; i<49; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
     }
-    
-   console.log(bombs);
-
   }
 
+  bombs.sort(function(a,b){
+    return a-b;
+  });
+  console.log(bombs);
 });
 
 
 
-//funzione che genera i quadrati delle griglie
+//funzione che genera i quadrati delle griglie in base alla difficoltà scelta
 function generateSquare(target) {
   const sq = document.createElement('div');
   sq.className = 'square';
@@ -70,9 +79,26 @@ function generateSquare(target) {
     sq.classList.add('normal');
   } else {
     sq.classList.add('hard');
-
   }
+
+
+//Verifico che la cella cliccata sia una bomba oppure no. Se non lo è posso continuare a giocare e il mio punteggio aumenta di uno (scoreCounter++), mentre alla prima bomba che viene cliccata il gioco si interrompe e viene visualizzato un messaggio che comunica il punteggio totalizzato.
   sq.addEventListener('click', function(event){ 
+
+    if 
+    (
+      (chosenDifficulty === 1 && scoreCounter === (100 - BOMBS_NUMBER-1)) || (chosenDifficulty === 2 && scoreCounter === (81 - BOMBS_NUMBER-1)) ||
+      (chosenDifficulty === 3 && scoreCounter === (49- BOMBS_NUMBER-1))
+    )
+    
+    {
+      endMessage.innerHTML = `Complimenti, hai vinto!`;
+      endMessage.style.display='block';
+      grid.append(endMessage);
+      result=true;
+      return result;
+    }
+
     if (!bombs.includes(parseInt(this.innerText)) && result===false) {
       sq.classList.add('safe');
       scoreCounter++;
@@ -83,13 +109,12 @@ function generateSquare(target) {
       endMessage.innerHTML = `Mi dispiace! Hai perso. Hai azzeccato ${scoreCounter} tentativi.`;
       endMessage.style.display='block';
       grid.append(endMessage);
+      console.log(grid);
       return result;
     } else { 
       return result;
     }
-  })
-
-  
+  });
   target.append(sq);
   return sq;
 }
