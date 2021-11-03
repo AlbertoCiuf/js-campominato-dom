@@ -4,9 +4,11 @@ const playButton = document.getElementById('play-button');
 const difficulty = document.getElementById('difficulty');
 let chosenDifficulty;
 let result=false;
-
+let scoreCounter=0;
 const bombs = [];
 const BOMBS_NUMBER = 16;
+
+const endMessage = document.getElementById('end-message');
 
 
 // funzione che al click del pulsante "Play!" genera le griglie in base alla difficoltà scelta
@@ -70,25 +72,19 @@ function generateSquare(target) {
     sq.classList.add('hard');
 
   }
-  sq.addEventListener('click', function(event){
-    // let sqNumb = event.target.innerText;
-    // console.log(sqNumb);
-    //console.log(this.innerText);
-    
-    let scoreCounter=0;
+  sq.addEventListener('click', function(event){ 
     if (!bombs.includes(parseInt(this.innerText)) && result===false) {
       sq.classList.add('safe');
-      console.log(result);
       scoreCounter++;
-      // console.log(sq);
     }
     else if (bombs.includes(parseInt(this.innerText)) && result===false) {
       sq.classList.add('bomb');
       result=true;
-      console.log(result);
+      endMessage.innerHTML = `Mi dispiace! Hai perso. Hai azzeccato ${scoreCounter} tentativi.`;
+      endMessage.style.display='block';
+      grid.append(endMessage);
       return result;
     } else { 
-      console.log(result);
       return result;
     }
   })
