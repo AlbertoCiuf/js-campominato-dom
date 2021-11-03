@@ -15,41 +15,46 @@ playButton.addEventListener('click', function() {
   //console.log('click');
   
   if (chosenDifficulty===1) {
-    for (let i=0; i<100; i++) {
-      const square = generateSquare(grid);
-      square.innerHTML = i+1;
-    }
     for (let i=0; i<BOMBS_NUMBER; i++) {
       let bomb = getRandomInt(1,100);
       if (!bombs.includes(bomb)) bombs.push(bomb);
       else i--;
    }
-
-  } else if (chosenDifficulty===2) {
-    for (let i=0; i<81; i++) {
+    for (let i=0; i<100; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
     }
+    
+
+  } else if (chosenDifficulty===2) {
     for (let i=0; i<BOMBS_NUMBER; i++) {
       let bomb = getRandomInt(1,81);
       if (!bombs.includes(bomb)) bombs.push(bomb);
       else i--;
    }
-  } else {
-    for (let i=0; i<49; i++) {
+    for (let i=0; i<81; i++) {
       const square = generateSquare(grid);
       square.innerHTML = i+1;
     }
+   
+  } else {
     for (let i=0; i<BOMBS_NUMBER; i++) {
       let bomb = getRandomInt(1,49);
       if (!bombs.includes(bomb)) bombs.push(bomb);
       else i--;
    }
+    for (let i=0; i<49; i++) {
+      const square = generateSquare(grid);
+      square.innerHTML = i+1;
+    }
+    
    console.log(bombs);
 
   }
 
 });
+
+
 
 //funzione che genera i quadrati delle griglie
 function generateSquare(target) {
@@ -65,21 +70,23 @@ function generateSquare(target) {
 
   }
 
-  //onClick delle celle
   sq.addEventListener('click', function(event){
-    this.classList.add('clicked');
-    //console.log(event.target.innerText);
-  });
-
-
+    let sqNumb = event.target.innerText;
+    console.log(sqNumb);
+    
+    if (!bombs.includes(sqNumb)) {
+      sq.classList.add('safe');
+      console.log(sq);
+    }
+    else sq.classList.add('bomb');
+  })
 
   target.append(sq);
   return sq;
 }
 
-
+//funzione che genera e restituisce numero intero random compreso tra minimo e massimo passati come parametri
 function getRandomInt(min,max) {
   return Math.floor(Math.random()*(max - min + 1) + min);
 }
-
 

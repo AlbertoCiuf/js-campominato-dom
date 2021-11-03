@@ -43,6 +43,7 @@ footer {
   align-items: center;
   border: 1px solid black;
   cursor: pointer;
+  transition: background-color .3s;
 }
 
 .square.easy {
@@ -60,7 +61,11 @@ footer {
   height: calc(100% / 7);
 }
 
-.square.clicked {
+.square.safe {
   background-color:#6695ED;
   color: white;
+}
+
+.square.bomb {
+  background-color: #DB143C;
 }
