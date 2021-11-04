@@ -60,9 +60,9 @@ function playGame(){
 
 
   //array sortato e log per provare a vincere e testare il messaggio di vittoria
-      // bombs.sort(function(a,b){
-      //   return a-b;
-      // });
+      bombs.sort(function(a,b){
+        return a-b;
+      });
       console.log(bombs);
 }
 
@@ -85,27 +85,29 @@ function generateSquare(target) {
   sq.addEventListener('click', function(event){ 
     //se il giocatore riesce a finire il gioco, stampo l'output del messaggio di vittoria
 
+    //ridondante?
     if (chosenDifficulty === 1) squareNumber = 100;
     else if (chosenDifficulty === 2) squareNumber = 81;
     else squareNumber = 49;
 
    // console.log(squareNumber);
 
-    if 
-    (
-      (chosenDifficulty === 1 && scoreCounter === (squareNumber - BOMBS_NUMBER -1)) || (chosenDifficulty === 2 && scoreCounter === (squareNumber - BOMBS_NUMBER -1)) ||
+    if (
+      (chosenDifficulty === 1 && scoreCounter === (squareNumber - BOMBS_NUMBER -1)) || 
+      (chosenDifficulty === 2 && scoreCounter === (squareNumber - BOMBS_NUMBER -1)) ||
       (chosenDifficulty === 3 && scoreCounter === (squareNumber - BOMBS_NUMBER -1))
     ) {
       sq.classList.add('safe');
       endMessage.innerHTML = `Complimenti, hai vinto!`;
       endMessage.style.display='block';
       grid.append(endMessage);
+      endGame();
       result=true;
     }
 
     if (!bombs.includes(parseInt(this.innerText)) && result===false) {
+      if(!sq.classList.contains('safe')) scoreCounter++;
       sq.classList.add('safe');
-      scoreCounter++;
     }
     else if (bombs.includes(parseInt(this.innerText)) && result===false) {
       sq.classList.add('bomb');
